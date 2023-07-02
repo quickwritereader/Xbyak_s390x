@@ -1,0 +1,75 @@
+E, opCode:16
+I, opCode:8, i:8
+IE, opCode:16, unk:8, i1 :4, i2 :4
+MII, opCode:8, m1:4, rI2:12, rI3:24
+RI-A, opCode1:8, r1:4, opCode2:4, i2:16
+RI-B, opCode1:8, r1:4, opCode2:4, rI2:16
+RI-C, opCode1:8, m1:4, opCode2:4, rI2:16
+RIE-A, opCode1:8, r1:4, unk1:4, i2:16, m3:4, unk2:4, opCode2:8
+RIE-B, opCode1:8, r1:4, r2:4, rI4:16, m3:4, unk:4, opCode2:8
+RIE-C, opCode1:8, r1:4, m3:4, rI4:16, i2:8, opCode2:8
+RIE-D, opCode1:8, r1:4, r3:4, i2:16, unk:8, opCode2:8
+RIE-E, opCode1:8, r1:4, r3:4, rI2:16, unk:8, opCode2:8
+RIE-F, opCode1:8, r1:4, r2:4, i3:8, i4:8, i5:8, opCode2:8
+RIE-G, opCode1:8, r1:4, m3:4, i2:16, unk:8, opCode2:8
+RIL-A, opCode1:8, r1:4, opCode2:4, i2:32
+RIL-B, opCode1:8, r1:4, opCode2:4, rI2:32
+RIL-C, opCode1:8, m1:4, opCode2:4, rI2:32
+RIS, opCode1:8, r1:4, m3:4, b4:4, d4:12, i2:8, opCode2:8
+RR, opCode:8, r1_m1:4, r2:4
+RRD, opCode:16, r1:4, unk:4, r3:4, r2:4
+RRE, opCode:16, unk:8, r1:4, r2:4
+RRF-A-B, opCode:16, r3:4, m4:4, r1:4, r2:4
+RRF-C-E, opCode:16, m3:4, m4:4, r1:4, r2:4
+RRS, opCode1:8, r1:4, r2:4, b4:4, d4:12, m3:4, unk:4, opCode2:8
+RS-A, opCode:8, r1:4, r3:4, b2:4, d2:12
+RS-B, opCode:8, r1:4, m3:4, b2:4, d2:12
+RSI, opCode:8, r1:4, r3:4, rI2:16
+RSL-A, opCode1:8, l1:4, unk:4, b1:4, d1:12, unk2:8, opCode2:8
+RSL-B, opCode1:8, l2:8, b2:4, d2:12, r1:4, m3:4, opCode2:8
+RSY-A, opCode1:8, r1:4, r3:4, b2:4, dl2:12, dh2:8, opCode2:8
+RSY-B, opCode1:8, r1:4, m3:4, b2:4, dl2:12, dh2:8, opCode2:8
+RX-A, opCode:8, r1:4, x2:4, b2:4, d2:12
+RX-B, opCode:8, m1:4, x2:4, b2:4, d2:12
+RXE, opCode1:8, r1:4, x2:4, b2:4, d2:12, m3:4, unk:4, opCode2:8
+RXF, opCode1:8, r3:4, x2:4, b2:4, d2:12, r1:4, unk:4, opCode2:8
+RXY-A, opCode1:8, r1:4, x2:4, b2:4, dl2:12, dh2:8, opCode2:8
+RXY-B, opCode1:8, m1:4, x2:4, b2:4, dl2:12, dh2:8, opCode2:8
+S, opCode:16, b2:4, d2:12
+SI, opCode:8, i2:8, b1_b2:4, d1_d2:12
+SIL, opCode:16, b1:4, d1:12, i2:16
+SIY, opCode1:8, i2:8, b1:4, dl1:12, dh1:8, opCode2:8
+SMI, opCode:8, m1:4, unk:4, b3:4, d3:12, rI2:16
+SS-A, opCode:8, l1:8,       b1:4, d1:12, b2:4, d2:12
+SS-B, opCode:8, l1:4, l2:4, b1:4, d1:12, b2:4, d2:12
+SS-C, opCode:8, l1:4, i3:4, b1:4, d1:12, b2:4, d2:12
+SS-D, opCode:8, r1:4, r3:4, b1:4, d1:12, b2:4, d2:12
+SS-E, opCode:8, r1:4, r3:4, b2:4, d2:12, b4:4, d4:12
+SS-F, opCode:8, l2:8, b1:4, d1:12, b2:4, d2:12
+SSE, opCode:16, b1:4, d1:12, b2:4, d2:12
+SSF, opCode1:8, r3:4, opCode2:4, b1:4, d1:12, b2:4, d2:12
+VRI-A, opCode1:8, v1:4, unk:4, i2:16, m3:4, rxb:4, opCode2:8
+VRI-B, opCode1:8, v1:4, unk:4, i2:8, i3:8, m4:4, rxb:4, opCode2:8
+VRI-C, opCode1:8, v1:4, v3:4, i2:16, m4:4, rxb:4, opCode2:8
+VRI-D, opCode1:8, v1:4, v2:4, v3:4, unk:4, i4:8, m5:4, rxb:4, opCode2:8
+VRI-E, opCode1:8, v1:4, v2:4, i3:12, m5:4, m4:4, rxb:4, opCode2:8
+VRI-F, opCode1:8, v1:4, v2:4, v3:4, unk:4, m5:4, i4:8, rxb:4, opCode2:8
+VRI-G, opCode1:8, v1:4, v2:4, i4:8, m5:4, i3:8, rxb:4, opCode2:8
+VRI-H, opCode1:8, v1:4, unk:4, i2:16, i3:4, rxb:4, opCode2:8
+VRI-I, opCode1:8, v1:4, r2:4, unk:8, m4:4, i3:8, rxb:4, opCode2:8
+VRR-A, opCode1:8, v1:4, v2:4, unk:8, m5:4, m4:4, m3:4, rxb:4, opCode2:8
+VRR-B, opCode1:8, v1:4, v2:4, v3:4, unk1:4, m5:4, unk2:4, m4:4, rxb:4, opCode2:8
+VRR-C, opCode1:8, v1:4, v2:4, v3:4, unk1:4, m6:4, m5:4, m4:4, rxb:4, opCode2:8
+VRR-D, opCode1:8, v1:4, v2:4, v3:4, m5:4, m6:4, unk:4, v4:4, rxb:4, opCode2:8
+VRR-E, opCode1:8, v1:4, v2:4, v3:4, m6:4, unk:4, m5:4, v4:4, rxb:4, opCode2:8
+VRR-F, opCode1:8, v1:4, r2:4, r3:4, unk:16, rxb:4, opCode2:8
+VRR-G, opCode1:8, unk1:4, v1:4, unk2:20, rxb:4, opCode2:8
+VRR-H, opCode1:8, unk1:4, v1:4, v2:4, unk2:4, m3:4, unk3:8, rxb:4, opCode2:8
+VRR-I, opCode1:8, r1:4, v2:4, unk1:8, m3:4, m4:4, unk2:4, rxb:4, opCode2:8
+VRS-A, opCode1:8, v1:4, v3:4, b2:4, d2:12, m4:4, rxb:4, opCode2:8
+VRS-B, opCode1:8, v1:4, r3:4, b2:4, d2:12, m4:4, rxb:4, opCode2:8
+VRS-C, opCode1:8, r1:4, v3:4, b2:4, d2:12, m4:4, rxb:4, opCode2:8
+VRS-D, opCode1:8, unk:4, r3:4, b2:4, d2:12, v1:4, rxb:4, opCode2:8
+VRV, opCode1:8, v1:4, v2:4, b2:4, d2:12, m3:4, rxb:4, opCode2:8
+VRX, opCode1:8, v1:4, x2:4, b2:4, d2:12, m3:4, rxb:4, opCode2:8
+VSI, opCode1:8, i3:8, b2:4, d2:12, v1:4, rxb:4, opCode2:8

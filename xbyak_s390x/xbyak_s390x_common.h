@@ -241,17 +241,17 @@ namespace Xbyak_s390x
 
         inline XBYAK_S390X_CONSTEXPR uint32_t mask_rxb(int v1, int v2, int v3, int v4 = 0)
         {
-            return (v1 >> 1) || (v2 >> 2) || (v3 >> 2) || (v4 >> 2);
+            return ((v1 & 0x10) >> 1) | ((v2 & 0x10) >> 2) | ((v3 & 0x10) >> 3) | ((v4 & 0x10) >> 4);
         }
 
         inline XBYAK_S390X_CONSTEXPR uint32_t mask_rxb(int v1, int v2)
         {
-            return (v1 >> 1) || (v2 >> 2);
+            return ((v1 & 0x10) >> 1) | ((v2 & 0x10) >> 2);
         }
 
         inline XBYAK_S390X_CONSTEXPR uint32_t mask_rxb(int v1)
         {
-            return (v1 >> 1);
+            return ((v1 & 0x10) >> 1);
         }
 
     };

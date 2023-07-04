@@ -8,9 +8,8 @@ namespace Xbyak_s390x {
 
     public:
         XBYAK_S390X_CONSTEXPR AddrDB() :disp(0), regb(GPReg(0)) {}
+        XBYAK_S390X_CONSTEXPR AddrDB(const int32_t& dispArg) :disp(dispArg), regb(GPReg(0)) {}
         XBYAK_S390X_CONSTEXPR AddrDB(const int32_t& dispArg, const GPReg& baseReg) :disp(dispArg), regb(baseReg) {}
-
-        XBYAK_S390X_CONSTEXPR explicit AddrDB(const int32_t& dispArg) :disp(dispArg) {}
 
         int32_t disp;
         GPReg regb;

@@ -1,5 +1,5 @@
+"""IBM Z Principles of Operation method singature parser"""
 import sys
-
 TOK_DIGIT = 1
 TOK_LETTERS = 2
 TOK_HEX = 3
@@ -9,34 +9,38 @@ TOK_NONE = 44
 ARG_MAX_NUMB = 198809999999
 
 
-def getSTR(kind):
+def get_token_string(kind):
+    """Gets token string"""
     if kind == TOK_DIGIT:
         return "digit"
-    elif kind == TOK_LETTERS:
+    if kind == TOK_LETTERS:
         return "letter"
-    elif kind == TOK_SYM:
+    if kind == TOK_SYM:
         return "symbol"
-    elif kind == TOK_HEX:
+    if kind == TOK_HEX:
         return "hex"
-    elif kind == TOK_END:
+    if kind == TOK_END:
         return "end"
-    else:
-        return "none"
+    return "none"
 
 
-class Tok:
+class Token:
+    """Token"""
+
     def __init__(self, kind, val):
         self.kind = kind
         self.val = val
 
     def __repr__(self):
-        return f"Tok('{getSTR(self.kind)}', '{self.val}')"
+        return f"Tok('{get_token_string(self.kind)}', '{self.val}')"
 
     def __str__(self):
         return self.__repr__()
 
 
 class ArgElement:
+    """Represents Argument element"""
+
     def __init__(self, kind, val):
         self.kind = kind
         self.val = val
@@ -50,279 +54,278 @@ class ArgElement:
     def __eq__(self, other):
         return self.kind == other.kind and self.val == other.val
 
-    def getCppArgType(self):
+    def get_arg_type(self):
+        """Gets arg type"""
+        arg_type = ""
         if self.kind is None or self.kind in "[]":
-            return ""
-        xtra = self.val if self.val != None and self.val >= 0 else ""
-        if self.kind == "r":
-            return "Operand"
+            arg_type = ""
+        elif self.kind == "r":
+            arg_type = "Operand"
         elif self.kind == "v":
-            return "VReg"
+            arg_type = "VReg"
         elif self.kind == "f":
-            return "FReg"
+            arg_type = "FReg"
         elif self.kind in ["ri", "m", "i"]:
-            return "int"
+            arg_type = "int"
         elif self.kind[0] == "d":
-            return f"Addr{self.kind.upper()}"
-        return ""
+            arg_type = f"Addr{self.kind.upper()}"
+        return arg_type
 
-    def getCppArgName(self):
+    def get_arg_name(self):
+        """Gets arg name"""
         if self.kind == "number" or self.kind in "()|":
             return str(self.val)
         if str(self.val) == "-1":
             return f"{self.kind}"
         return f"{self.kind}{self.val}"
 
-    def getCppArgDefault(self):
-        t = self.getCppArgType()
-        if t =="int":
+    def get_arg_default(self):
+        """Gets arg default value"""
+        arg_type = self.get_arg_type()
+        if arg_type == "int":
             return "0"
         else:
-            return f"{t}{{}}"
-    
+            return f"{arg_type}{{}}"
 
 
-
-def skip_nonsense(s, beg=0):
-    i = beg
+def skip_nonsense(string, begin_index=0):
+    "Skips whitspaces and comma"
+    i = begin_index
     # skip till ,[](d)
-    while i < len(s):
-        c = s[i]
-        if c in ", \t\n\r":
+    while i < len(string):
+        if string[i] in ", \t\n\r":
             i += 1
         else:
             break
     return i
 
 
-def get_symbol(s, beg):
-    if beg < len(s) and s[beg] in "[]()|":
-        return (beg + 1, s[beg])
-    return (beg, None)
+def get_symbol(string, begin_index):
+    """Gets symbols"""
+    if begin_index < len(string) and string[begin_index] in "[]()|":
+        return (begin_index + 1, string[begin_index])
+    return (begin_index, None)
 
-def get_hex(s, beg):
-    i = beg
-    if i<len(s) and s[i] == "0":
-        i+=1
-        if i<len(s) and s[i] == "x":
-            i+=1
-    while i < len(s):
-        if s[i] >= "0" and s[i] <= "9":
+
+def get_hex(string, begin_index):
+    """Gets Hexadecimal number"""
+    i = begin_index
+    if i < len(string) and string[i] == "0":
+        i += 1
+        if i < len(string) and string[i] == "x":
             i += 1
-        elif s[i] >='a' and s[i]<='f':
+    while i < len(string):
+        if string[i] >= "0" and string[i] <= "9":
             i += 1
-        else:
-            break
-    if i<beg+3:
-        #at least 3 symbols needed 0x0
-        return (beg, None)
-    return (i, None if beg >= i else s[beg:i])
-
-
-def get_letters(s, beg):
-    i = beg
-    while i < len(s):
-        if s[i] >= "a" and s[i] <= "z":
+        elif string[i] >= 'a' and string[i] <= 'f':
             i += 1
         else:
             break
-    return (i, None if beg >= i else s[beg:i])
+    if i < begin_index+3:
+        # at least 3 symbols needed 0x0
+        return (begin_index, None)
+    return (i, None if begin_index >= i else string[begin_index:i])
 
 
-def get_digits(s, beg):
-    i = beg
-    while i < len(s):
-        if s[i] >= "0" and s[i] <= "9":
+def get_letters(string, begin_index):
+    """Gets letters"""
+    i = begin_index
+    while i < len(string):
+        if string[i] >= "a" and string[i] <= "z":
             i += 1
         else:
             break
-    return (i, None if beg >= i else s[beg:i])
+    return (i, None if begin_index >= i else string[begin_index:i])
 
-def get_digits(s, beg):
-    i = beg
-    while i < len(s):
-        if s[i] >= "0" and s[i] <= "9":
+
+def get_digits(string, begin_index):
+    """Gets digits"""
+    i = begin_index
+    while i < len(string):
+        if string[i] >= "0" and string[i] <= "9":
             i += 1
         else:
             break
-    return (i, None if beg >= i else s[beg:i])
+    return (i, None if begin_index >= i else string[begin_index:i])
 
 
-def tokenize(s):
-    s = s.lower()
+def tokenize(string):
+    """Tokenize"""
+    string = string.lower()
     i = 0
-    while i < len(s):
+    while i < len(string):
         unk = True
-        i = skip_nonsense(s, i)
-        i, val = get_hex(s, i)
+        i = skip_nonsense(string, i)
+        i, val = get_hex(string, i)
         if val is not None:
             unk = False
-            yield Tok(TOK_HEX, val)
-        i, val = get_letters(s, i)
+            yield Token(TOK_HEX, val)
+        i, val = get_letters(string, i)
         if val is not None:
             unk = False
-            yield Tok(TOK_LETTERS, val)
-        i, val = get_digits(s, i)
+            yield Token(TOK_LETTERS, val)
+        i, val = get_digits(string, i)
         if val is not None:
             unk = False
-            yield Tok(TOK_DIGIT, val)
-        i, val = get_symbol(s, i)
+            yield Token(TOK_DIGIT, val)
+        i, val = get_symbol(string, i)
         if val is not None:
             unk = False
-            yield Tok(TOK_SYM, val)
+            yield Token(TOK_SYM, val)
         if unk:
             print("warning unk, force skip", file=sys.stderr)
             i += 1
-    yield (Tok(TOK_END, 0))
+    yield Token(TOK_END, 0)
 
 
-def get_unit(curr_token, tokenizer):
-    if curr_token.kind == TOK_END:
-        return (curr_token, None)
-    if curr_token.kind == TOK_LETTERS:
-        strx = curr_token.val
+def get_unit(current_token, tokenizer):
+    """Gets Unit ArgElement"""
+    if current_token.kind == TOK_END:
+        return (current_token, None)
+    if current_token.kind == TOK_LETTERS:
+        strx = current_token.val
         # possible addr
-        curr_token = next(tokenizer)
+        current_token = next(tokenizer)
         digit = -1
-        if curr_token.kind == TOK_DIGIT:
-            digit = curr_token.val
-            curr_token = next(tokenizer)
-        return (curr_token, ArgElement(strx, int(digit)))
-    return (curr_token, None)
+        if current_token.kind == TOK_DIGIT:
+            digit = current_token.val
+            current_token = next(tokenizer)
+        return (current_token, ArgElement(strx, int(digit)))
+    return (current_token, None)
 
 
-def get_disp_addr(curr_token, tokenizer):
-    curr_token, arg = get_unit(curr_token, tokenizer)
+def get_disp_addr(current_token, tokenizer):
+    """Gets displacement address"""
+    current_token, arg = get_unit(current_token, tokenizer)
     if arg is None or arg.kind != "d":
-        return (curr_token, arg)
+        return (current_token, arg)
     # check if symbol ( and find compound addr
-    if curr_token.val == "(":
-        curr_token = next(tokenizer)
+    if current_token.val == "(":
+        current_token = next(tokenizer)
         # try registers and lengths
-        curr_token, arg1 = get_unit(curr_token, tokenizer)
+        current_token, arg1 = get_unit(current_token, tokenizer)
 
         if arg1 is not None and arg1.kind in "bxlvr":
             arg.val = max(arg.val, arg1.val)
             arg.kind += arg1.kind
             # try registers and lengths
-            curr_token, arg2 = get_unit(curr_token, tokenizer)
+            current_token, arg2 = get_unit(current_token, tokenizer)
 
             if arg2 is not None and arg1.kind in "bxlvr":
                 arg.val = max(arg.val, arg2.val)
                 arg.kind += arg2.kind
-    if curr_token.kind == TOK_SYM and curr_token.val == ")":
-        curr_token = next(tokenizer)
+    if current_token.kind == TOK_SYM and current_token.val == ")":
+        current_token = next(tokenizer)
     else:
         print("warning error", file=sys.stderr)
-    return (curr_token, arg)
+    return (current_token, arg)
 
 
-
-def parse_arg(s):
+def parse_arg(string):
     """
     Parse, its very relaxed and simply skips errors
     optionals starts whenever it encounters [ symbol
     """
-    listx = []
+    parsed_list = []
     optional_start = None
-    tokenizer = tokenize(s)
+    tokenizer = tokenize(string)
     tok_next = next(tokenizer)
     while tok_next.kind != TOK_END:
-        tok_next, a = get_disp_addr(tok_next, tokenizer)
-        if a is not None:
-            listx.append(a)
+        tok_next, address = get_disp_addr(tok_next, tokenizer)
+        if address is not None:
+            parsed_list.append(address)
         else:
             if tok_next.kind == TOK_SYM:
                 if optional_start is None and tok_next.val == "[":
-                    optional_start = len(listx)
+                    optional_start = len(parsed_list)
                     # we do not care for other symbols or later occurences
                 if tok_next.val == "|":
-                    listx.append(ArgElement("|", tok_next.val))
+                    parsed_list.append(ArgElement("|", tok_next.val))
                 if tok_next.val == "(":
-                    listx.append(ArgElement("(", tok_next.val))
+                    parsed_list.append(ArgElement("(", tok_next.val))
                 if tok_next.val == ")":
-                    listx.append(ArgElement(")", tok_next.val))
+                    parsed_list.append(ArgElement(")", tok_next.val))
                 tok_next = next(tokenizer)
-            elif tok_next.kind == TOK_DIGIT or tok_next.kind == TOK_HEX:
-                listx.append(ArgElement("number", tok_next.val))
+            elif tok_next.kind in (TOK_DIGIT, TOK_HEX):
+                parsed_list.append(ArgElement("number", tok_next.val))
                 tok_next = next(tokenizer)
             else:
-                #force
+                # force
                 print(f"warning force skip: {tok_next}", file=sys.stderr)
                 tok_next = next(tokenizer)
 
-
-    return (listx, optional_start)
+    return (parsed_list, optional_start)
 
 
 class Signature:
+    """Method Signature"""
 
-
-    def __init__(self, formatX):
-        pp, ii = parse_arg(formatX)
-        self.optionalStart = ii if ii is not None else ARG_MAX_NUMB
-        self.argList = pp
+    def __init__(self, format_string):
+        arg_list, optional_index = parse_arg(format_string)
+        self.optional_start = optional_index if optional_index is not None else ARG_MAX_NUMB
+        self.arg_list = arg_list
 
     def __repr__(self):
-        return f"Signature({self.argList}, {self.optionalStart})"
+        return f"Signature({self.arg_list}, {self.optional_start})"
 
     def __str__(self):
         return self.__repr__()
 
 
-def getMergedSignature(ls1, ls2):
+def get_merged_signature(ls1: Signature, ls2: Signature):
     ''' 
-    returns
-       (overlapped_signature, amibiguity index)
+    returns  (overlapped_signature, amibiguity index)
     '''
-    len1 = len(ls1.argList)
-    len2 = len(ls2.argList)
+    len1 = len(ls1.arg_list)
+    len2 = len(ls2.arg_list)
     min_len = min(len1, len2)
-    #merge by type
-    types1=[x.getCppArgType() for x in ls1.argList[:min_len]]
-    types2=[x.getCppArgType() for x in ls2.argList[:min_len]]
-    optional_ind = min(ls1.optionalStart, ls2.optionalStart, min_len)
+    # merge by type
+    types1 = [x.get_arg_type() for x in ls1.arg_list[:min_len]]
+    types2 = [x.get_arg_type() for x in ls2.arg_list[:min_len]]
+    optional_ind = min(ls1.optional_start, ls2.optional_start, min_len)
     types_overlaps = types2 == types1
     # print(f"{ls1} {ls2} overlaps {overlaps}")
-    if types_overlaps == False:
+    if not types_overlaps:
         return (None, ARG_MAX_NUMB)
-    #check if args overlaps:
+    # check if args overlaps:
     first_differ_index = -1
-    for i in range(0,min_len):
-        if ls1.argList[i] != ls2.argList[i]:
+    for i in range(0, min_len):
+        if ls1.arg_list[i] != ls2.arg_list[i]:
             first_differ_index = i
             break
-    args_overlap = first_differ_index==-1 #ls1.argList[:min_len] == ls2.argList[:min_len]
-    # find min optional, it should be minimum of min_len, 1st optional, 2nd optional    
-    if args_overlap == False:
-        #we may have  a problem
-        print(f"Warning: it maybe ambiguous as types overlap, but args don't :\n{ls1.argList}\n{ls2.argList}", file = sys.stderr)
-        print("We will try to merge some cases\nYou may need to fix that portion of the code manually",  file = sys.stderr)
+    # ls1.arg_list[:min_len] == ls2.arg_list[:min_len]
+    args_overlap = first_differ_index == -1
+    # find min optional, it should be minimum of min_len, 1st optional, 2nd optional
+    if not args_overlap:
+        # we may have  a problem
+        print(f"Warning: it maybe ambiguous as types overlap, but args don't :\n{ls1.arg_list}\n{ls2.arg_list}",
+            file=sys.stderr)
+        print("We will try to merge some cases\nYou may need to fix that portion of the code manually",
+            file=sys.stderr)
         if len1 == len2:
-            print(f"length are equal, so we will merge args by index order")
-            lsret = Signature("")
-            lsret.argList = ls1.argList[:first_differ_index]
-            lsret.optionalStart = optional_ind
+            print("length are equal, so we will merge args by index order")
+            merged_list = Signature("")
+            merged_list.arg_list = ls1.arg_list[:first_differ_index]
+            merged_list.optional_start = optional_ind
             gi1 = first_differ_index
             gi2 = gi1
-            while gi1<len1 and gi2<len2:
-                ar1 = ls1.argList[gi1] 
-                ar2 = ls2.argList[gi2]
+            while gi1 < len1 and gi2 < len2:
+                ar1 = ls1.arg_list[gi1]
+                ar2 = ls2.arg_list[gi2]
                 if ar1.val < ar2.val:
-                    gi1+=1
-                    lsret.argList.append(ar1)
+                    gi1 += 1
+                    merged_list.arg_list.append(ar1)
                 else:
-                    gi2+=1
-                    lsret.argList.append(ar2)
+                    gi2 += 1
+                    merged_list.arg_list.append(ar2)
             while gi1 < len1:
-                lsret.argList.append(ls1.argList[gi1])
-                gi1+=1
+                merged_list.arg_list.append(ls1.arg_list[gi1])
+                gi1 += 1
             while gi2 < len2:
-                lsret.argList.append(ls2.argList[gi2])
-                gi2+=1
-            return (lsret, first_differ_index)
-    
+                merged_list.arg_list.append(ls2.arg_list[gi2])
+                gi2 += 1
+            return (merged_list, first_differ_index)
     # lets change the one with more arguments
-    lsRet = ls1 if len1 > len2 else ls2
-    lsRet.optionalStart = optional_ind
-    return (lsRet, ARG_MAX_NUMB)
+    new_list = ls1 if len1 > len2 else ls2
+    new_list.optional_start = optional_ind
+    return (new_list, ARG_MAX_NUMB)

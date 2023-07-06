@@ -31,8 +31,9 @@ with pdfplumber.open(file_txt) as pdf:
             {
                 "vertical_strategy": "lines",
                 "horizontal_strategy": "text",
-                "intersection_x_tolerance": 7,
-                "text_y_tolerance": 6,
+                "text_y_tolerance": 4.5,
+                "intersection_x_tolerance":8,
+                "snap_y_tolerance":4,
             }
         )
         for table in tables:
@@ -63,4 +64,7 @@ with pdfplumber.open(file_txt) as pdf:
 
 
 with open(file_txt + "_table.txt", "w") as f:
-    print(table_list, file=f)
+    print("[", file=f)
+    for list in table_list:
+        print(str(list) +",", file=f)
+    print("]", file=f)

@@ -232,6 +232,7 @@ void ogr(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB981, r1, r2); }
 void pfmf(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB9AF, r1, r2); }
 void pgin(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB22E, r1, r2); }
 void pgout(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB22F, r1, r2); }
+void ppno(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB93C, r1, r2); }
 void prno(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB93C, r1, r2); }
 void pt(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB228, r1, r2); }
 void pti(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB99E, r1, r2); }
@@ -246,6 +247,7 @@ void slbgr(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB989, r1, r2); }
 void slbr(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB999, r1, r2); }
 void slgfr(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB91B, r1, r2); }
 void slgr(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB90B, r1, r2); }
+void sortl(const GPReg& r1, const GPReg& r2 ){ opRRE(0xB938, r1, r2); }
 void sqdbr(const FReg& r1, const FReg& r2 ){ opRRE(0xB315, r1, r2); }
 void sqdr(const FReg& r1, const FReg& r2 ){ opRRE(0xB244, r1, r2); }
 void sqebr(const FReg& r1, const FReg& r2 ){ opRRE(0xB314, r1, r2); }
@@ -282,6 +284,7 @@ void sfasr(const GPReg& r1 ){ opRRE(0xB385, r1); }
 void sfpc(const GPReg& r1 ){ opRRE(0xB384, r1); }
 void ssair(const GPReg& r1 ){ opRRE(0xB99F, r1); }
 void ssar(const GPReg& r1 ){ opRRE(0xB225, r1); }
+void nnpa( ){ opRRE(0xB93B); }
 void palb( ){ opRRE(0xB248); }
 void pcc( ){ opRRE(0xB92C); }
 void pckmo( ){ opRRE(0xB928); }
@@ -548,6 +551,7 @@ void niy(const AddrDB& db1, const int& i2 ){ opSIY(0xEB54, db1, i2); }
 void oiy(const AddrDB& db1, const int& i2 ){ opSIY(0xEB56, db1, i2); }
 void tmy(const AddrDB& db1, const int& i2 ){ opSIY(0xEB51, db1, i2); }
 void xiy(const AddrDB& db1, const int& i2 ){ opSIY(0xEB57, db1, i2); }
+void lpswey(const AddrDB& db1 ){ opSIY(0xEB71, db1); }
 void aghi(const GPReg& r1, const int& i2 ){ opRI_A(0xA7B, r1, i2); }
 void ahi(const GPReg& r1, const int& i2 ){ opRI_A(0xA7A, r1, i2); }
 void cghi(const GPReg& r1, const int& i2 ){ opRI_A(0xA7F, r1, i2); }
@@ -714,6 +718,7 @@ void kma(const GPReg& r1, const GPReg& r3, const GPReg& r2 ){ opRRF_B(0xB929, r1
 void kmctr(const GPReg& r1, const GPReg& r3, const GPReg& r2 ){ opRRF_B(0xB92D, r1, r3, r2); }
 void crdte(const GPReg& r1, const GPReg& r3, const GPReg& r2, const int& m4= {}  ){ opRRF_B(0xB98F, r1, r3, r2, m4); }
 void idte(const GPReg& r1, const GPReg& r3, const GPReg& r2, const int& m4= {}  ){ opRRF_B(0xB98E, r1, r3, r2, m4); }
+void rdp(const GPReg& r1, const GPReg& r3, const GPReg& r2, const int& m4= {}  ){ opRRF_B(0xB98B, r1, r3, r2, m4); }
 void didbr(const FReg& r1, const FReg& r3, const FReg& r2, const int& m4 ){ opRRF_B(0xB35B, r1, r3, r2, m4); }
 void diebr(const FReg& r1, const FReg& r3, const FReg& r2, const int& m4 ){ opRRF_B(0xB353, r1, r3, r2, m4); }
 void lptea(const GPReg& r1, const GPReg& r3, const GPReg& r2, const int& m4 ){ opRRF_B(0xB9AA, r1, r3, r2, m4); }
@@ -738,11 +743,13 @@ void cij(const Operand& r1, const int& i2, const int& m3, const Label& lbl_ri4 )
 void clgij(const GPReg& r1, const int& i2, const int& m3, const int& ri4 ){ opRIE_C(0xEC7D, r1, i2, m3, ri4); }
 void clij(const GPReg& r1, const int& i2, const int& m3, const int& ri4 ){ opRIE_C(0xEC7F, r1, i2, m3, ri4); }
 void cfc(const AddrDB& db2 ){ opS(0xB21A, db2); }
+void lbear(const AddrDB& db2 ){ opS(0xB200, db2); }
 void lfas(const AddrDB& db2 ){ opS(0xB2BD, db2); }
 void lfpc(const AddrDB& db2 ){ opS(0xB29D, db2); }
 void lpswe(const AddrDB& db2 ){ opS(0xB2B2, db2); }
 void msch(const AddrDB& db2 ){ opS(0xB232, db2); }
 void pc(const AddrDB& db2 ){ opS(0xB218, db2); }
+void qpaci(const AddrDB& db2 ){ opS(0xB28F, db2); }
 void rp(const AddrDB& db2 ){ opS(0xB277, db2); }
 void sac(const AddrDB& db2 ){ opS(0xB219, db2); }
 void sacf(const AddrDB& db2 ){ opS(0xB279, db2); }
@@ -756,6 +763,7 @@ void srnmb(const AddrDB& db2 ){ opS(0xB2B8, db2); }
 void srnmt(const AddrDB& db2 ){ opS(0xB2B9, db2); }
 void ssch(const AddrDB& db2 ){ opS(0xB233, db2); }
 void stap(const AddrDB& db2 ){ opS(0xB212, db2); }
+void stbear(const AddrDB& db2 ){ opS(0xB201, db2); }
 void stck(const AddrDB& db2 ){ opS(0xB205, db2); }
 void stckc(const AddrDB& db2 ){ opS(0xB207, db2); }
 void stcke(const AddrDB& db2 ){ opS(0xB278, db2); }
@@ -1082,6 +1090,7 @@ void vscbi(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4 ){ opVR
 void vsum(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4 ){ opVRR_C(0xE764, v1, v2, v3, m4); }
 void vsumg(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4 ){ opVRR_C(0xE765, v1, v2, v3, m4); }
 void vsumq(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4 ){ opVRR_C(0xE767, v1, v2, v3, m4); }
+void vcrnf(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_C(0xE675, v1, v2, v3, m4, m5); }
 void vfa(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_C(0xE7E3, v1, v2, v3, m4, m5); }
 void vfd(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_C(0xE7E5, v1, v2, v3, m4, m5); }
 void vfm(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_C(0xE7E7, v1, v2, v3, m4, m5); }
@@ -1142,6 +1151,10 @@ void vupl(const VReg& v1, const VReg& v2, const int& m3 ){ opVRR_A(0xE7D6, v1, v
 void vuplh(const VReg& v1, const VReg& v2, const int& m3 ){ opVRR_A(0xE7D5, v1, v2, m3); }
 void vupll(const VReg& v1, const VReg& v2, const int& m3 ){ opVRR_A(0xE7D4, v1, v2, m3); }
 void vistr(const VReg& v1, const VReg& v2, const int& m3, const int& m5= {}  ){ opVRR_A(0xE75C, v1, v2, m3, 0, m5); }
+void vcfn(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ opVRR_A(0xE65D, v1, v2, m3, m4, 0); }
+void vclfnh(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ opVRR_A(0xE656, v1, v2, m3, m4, 0); }
+void vclfnl(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ opVRR_A(0xE65E, v1, v2, m3, m4, 0); }
+void vcnf(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ opVRR_A(0xE655, v1, v2, m3, m4, 0); }
 void vfll(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ opVRR_A(0xE7C4, v1, v2, m3, m4, 0); }
 void vfsq(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ opVRR_A(0xE7CE, v1, v2, m3, m4, 0); }
 void wfc(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ opVRR_A(0xE7CB, v1, v2, m3, m4, 0); }
@@ -1175,9 +1188,11 @@ void vch(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const in
 void vchl(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_B(0xE7F9, v1, v2, v3, m4, m5); }
 void vpkls(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_B(0xE795, v1, v2, v3, m4, m5); }
 void vpks(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_B(0xE797, v1, v2, v3, m4, m5); }
+void vschp(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5 ){ opVRR_B(0xE674, v1, v2, v3, m4, m5); }
 void vfae(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5= {}  ){ opVRR_B(0xE782, v1, v2, v3, m4, m5); }
 void vfee(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5= {}  ){ opVRR_B(0xE780, v1, v2, v3, m4, m5); }
 void vfene(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5= {}  ){ opVRR_B(0xE781, v1, v2, v3, m4, m5); }
+void vscshp(const VReg& v1, const VReg& v2, const VReg& v3 ){ opVRR_B(0xE67C, v1, v2, v3); }
 void vperm(const VReg& v1, const VReg& v2, const VReg& v3, const VReg& v4 ){ opVRR_E(0xE78C, v1, v2, v3, v4); }
 void vsel(const VReg& v1, const VReg& v2, const VReg& v3, const VReg& v4 ){ opVRR_E(0xE78D, v1, v2, v3, v4); }
 void vfma(const VReg& v1, const VReg& v2, const VReg& v3, const VReg& v4, const int& m5, const int& m6 ){ opVRR_E(0xE78F, v1, v2, v3, v4, m5, m6); }
@@ -1209,14 +1224,20 @@ void vap(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const in
 void vdp(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE67A, v1, v2, v3, i4, m5); }
 void vmp(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE678, v1, v2, v3, i4, m5); }
 void vmsp(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE679, v1, v2, v3, i4, m5); }
+void vpkzr(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE670, v1, v2, v3, i4, m5); }
 void vrp(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE67B, v1, v2, v3, i4, m5); }
 void vsdp(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE67E, v1, v2, v3, i4, m5); }
 void vsp(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE673, v1, v2, v3, i4, m5); }
+void vsrpr(const VReg& v1, const VReg& v2, const VReg& v3, const int& i4, const int& m5 ){ opVRI_F(0xE672, v1, v2, v3, i4, m5); }
 void vcp(const VReg& v1, const VReg& v2, const int& m3 ){ opVRR_H(0xE677, v1, v2, m3); }
 void vcvb(const GPReg& r1, const VReg& v2, const int& m3, const int& m4= {}  ){ opVRR_I(0xE650, r1, v2, m3, m4); }
 void vcvbg(const GPReg& r1, const VReg& v2, const int& m3, const int& m4= {}  ){ opVRR_I(0xE652, r1, v2, m3, m4); }
 void vcvd(const VReg& v1, const GPReg& r2, const int& i3, const int& m4 ){ opVRI_I(0xE658, v1, r2, i3, m4); }
 void vcvdg(const VReg& v1, const GPReg& r2, const int& i3, const int& m4 ){ opVRI_I(0xE65A, v1, r2, i3, m4); }
+void vcsph(const VReg& v1, const VReg& v2, const VReg& v3, const int& m4 ){ opVRR_J(0xE67D, v1, v2, v3, m4); }
+void vclzdp(const VReg& v1, const VReg& v2, const int& m3 ){ opVRR_K(0xE651, v1, v2, m3); }
+void vupkzh(const VReg& v1, const VReg& v2, const int& m3 ){ opVRR_K(0xE654, v1, v2, m3); }
+void vupkzl(const VReg& v1, const VReg& v2, const int& m3 ){ opVRR_K(0xE65C, v1, v2, m3); }
 void vlip(const VReg& v1, const int& i2, const int& i3 ){ opVRI_H(0xE649, v1, i2, i3); }
 void vpsop(const VReg& v1, const VReg& v2, const int& i3, const int& i4, const int& m5 ){ opVRI_G(0xE65B, v1, v2, i3, i4, m5); }
 void vsrp(const VReg& v1, const VReg& v2, const int& i3, const int& i4, const int& m5 ){ opVRI_G(0xE659, v1, v2, i3, i4, m5); }
@@ -1679,7 +1700,7 @@ void wldeb(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 2, 8); }
 void vflls(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 2, 0); }
 void wflls(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 2, 8); }
 void wflld(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 3, 8); }
-void vled(const VReg& v1, const VReg& v2, const int& m3, const int& m4, const int& m5 ){ vflr(v1, v2, m4, m4, m5); }
+void vled(const VReg& v1, const VReg& v2, const int& m3, const int& m4, const int& m5 ){ vflr(v1, v2, m3, m4, m5); }
 void vledb(const VReg& v1, const VReg& v2, const int& m4, const int& m5 ){ vflr(v1, v2, 3, m4, m5); }
 void wledb(const VReg& v1, const VReg& v2, const int& m4, const int& m5 ){ vflr(v1, v2, 3, 8|m4, m5); }
 void vflrd(const VReg& v1, const VReg& v2, const int& m4, const int& m5 ){ vflr(v1, v2, 3, m4, m5); }
@@ -1755,6 +1776,9 @@ void vftcidb(const VReg& v1, const VReg& v2, const int& i3 ){ vftci(v1, v2, i3, 
 void wftcisb(const VReg& v1, const VReg& v2, const int& i3 ){ vftci(v1, v2, i3, 2, 8); }
 void wftcidb(const VReg& v1, const VReg& v2, const int& i3 ){ vftci(v1, v2, i3, 3, 8); }
 void wftcixb(const VReg& v1, const VReg& v2, const int& i3 ){ vftci(v1, v2, i3, 4, 8); }
+void vschsp(const VReg& v1, const VReg& v2, const VReg& v3, const int& m5 ){ vschp(v1, v2, v3, 2, m5); }
+void vschdp(const VReg& v1, const VReg& v2, const VReg& v3, const int& m5 ){ vschp(v1, v2, v3, 3, m5); }
+void vschxp(const VReg& v1, const VReg& v2, const VReg& v3, const int& m5 ){ vschp(v1, v2, v3, 4, m5); }
 // Extensiones 2: 
 //jump on overflow / if ones
 void bo(const AddrDXB& dxb2 ){bc(1, dxb2); }
@@ -1942,4 +1966,4 @@ void jrxle(const GPReg& r1, const GPReg& r3, const Label lbl2 ){brxle(r1, r3, lb
 void jrxlg(const GPReg& r1, const GPReg& r3, const Label lbl2 ){brxlg(r1, r3, lbl2); }
 
 // Missed ones: 
-// ['DIAGNOSE', '—', 'DM', 'P DM', '', '', 'MD', '83', '10-23'] 
+// ['DIAGNOSE', '—', 'DM', 'P DM', '', '', 'MD', '83', '10-24'] 

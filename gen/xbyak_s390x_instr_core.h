@@ -89,8 +89,8 @@ void opRIE_D(int opCode, const Operand& r1, const Operand& r3, const int& i2 ){
     appendInto(instr_fmt);
 }
 
-//SIY: D1(B1),I2
-void opSIY(int opCode, const AddrDB& db1, const int& i2 ){
+//SIY: D1(B1),I2 | D1(B1)
+void opSIY(int opCode, const AddrDB& db1, const int& i2= {}  ){
     //bit_fields: [('opcode1', 8), ('i2', 8), ('b1', 4), ('dl1', 12), ('dh1', 8), ('opcode2', 8)]
     auto instr_opcode1 = local::shift_right_mask(opCode, 8, 8);
     auto instr_opcode2 = local::mask(opCode, 8);
@@ -879,8 +879,8 @@ void opVRR_F(int opCode, const VReg& v1, const Operand& r2, const Operand& r3 ){
     appendInto(instr_fmt);
 }
 
-//VRR-b: V1,V2,V3,M4,M5 | V1,V2,V3,M4[,M5]
-void opVRR_B(int opCode, const VReg& v1, const VReg& v2, const VReg& v3, const int& m4, const int& m5= {}  ){
+//VRR-b: V1,V2,V3,M4,M5 | V1,V2,V3,M4[,M5] | V1,V2,V3
+void opVRR_B(int opCode, const VReg& v1, const VReg& v2, const VReg& v3, const int& m4= {} , const int& m5= {}  ){
     //bit_fields: [('opcode1', 8), ('v1', 4), ('v2', 4), ('v3', 4), ('unk1', 4), ('m5', 4), ('unk2', 4), ('m4', 4), ('rxb', 4), ('opcode2', 8)]
     auto instr_opcode1 = local::shift_right_mask(opCode, 8, 8);
     auto instr_opcode2 = local::mask(opCode, 8);
@@ -1023,6 +1023,33 @@ void opVRI_I(int opCode, const VReg& v1, const Operand& r2, const int& i3, const
     auto instr_m4 = local::mask(m4,4);
     auto instr_rxb = local::mask_rxb(v1.getIdx());
     Format_VRI_I instr_fmt = { instr_opcode1, instr_v1, instr_r2, instr_m4, instr_i3, instr_rxb, instr_opcode2 };
+    appendInto(instr_fmt);
+}
+
+//VRR-j: V1,V2,V3,M4
+void opVRR_J(int opCode, const VReg& v1, const VReg& v2, const VReg& v3, const int& m4 ){
+    //bit_fields: [('opcode1', 8), ('v1', 4), ('v2', 4), ('v3', 4), ('unk', 4), ('m4', 4), ('unk', 8), ('rxb', 4), ('opcode2', 8)]
+    auto instr_opcode1 = local::shift_right_mask(opCode, 8, 8);
+    auto instr_opcode2 = local::mask(opCode, 8);
+    auto instr_v1 = local::mask(v1.getIdx(),4);
+    auto instr_v2 = local::mask(v2.getIdx(),4);
+    auto instr_v3 = local::mask(v3.getIdx(),4);
+    auto instr_m4 = local::mask(m4,4);
+    auto instr_rxb = local::mask_rxb(v1.getIdx(), v2.getIdx(), v3.getIdx());
+    Format_VRR_J instr_fmt = { instr_opcode1, instr_v1, instr_v2, instr_v3, instr_m4, instr_rxb, instr_opcode2 };
+    appendInto(instr_fmt);
+}
+
+//VRR-k: V1,V2,M3
+void opVRR_K(int opCode, const VReg& v1, const VReg& v2, const int& m3 ){
+    //bit_fields: [('opcode1', 8), ('v1', 4), ('v2', 4), ('unk', 8), ('m3', 4), ('unk', 8), ('rxb', 4), ('opcode2', 8)]
+    auto instr_opcode1 = local::shift_right_mask(opCode, 8, 8);
+    auto instr_opcode2 = local::mask(opCode, 8);
+    auto instr_v1 = local::mask(v1.getIdx(),4);
+    auto instr_v2 = local::mask(v2.getIdx(),4);
+    auto instr_m3 = local::mask(m3,4);
+    auto instr_rxb = local::mask_rxb(v1.getIdx(), v2.getIdx());
+    Format_VRR_K instr_fmt = { instr_opcode1, instr_v1, instr_v2, instr_m3, instr_rxb, instr_opcode2 };
     appendInto(instr_fmt);
 }
 

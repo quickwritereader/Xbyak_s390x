@@ -572,6 +572,22 @@ struct Format_VRR_I {
   }
 };
 
+struct Format_VRR_J {
+  packed_type<48>::typeX instr = 0;
+  constexpr static size_t sizeOf(){ return 6; }
+  Format_VRR_J(int64_t opcode1, int64_t v1, int64_t v2, int64_t v3, int64_t m4, int64_t rxb, int64_t opcode2){
+    instr = XBYAK_S390X_BIGENDIAN_64( 0 | (opcode1<<56) | (v1<<52) | (v2<<48) | (v3<<44) | (m4<<36) | (rxb<<24) | (opcode2<<16) );
+  }
+};
+
+struct Format_VRR_K {
+  packed_type<48>::typeX instr = 0;
+  constexpr static size_t sizeOf(){ return 6; }
+  Format_VRR_K(int64_t opcode1, int64_t v1, int64_t v2, int64_t m3, int64_t rxb, int64_t opcode2){
+    instr = XBYAK_S390X_BIGENDIAN_64( 0 | (opcode1<<56) | (v1<<52) | (v2<<48) | (m3<<36) | (rxb<<24) | (opcode2<<16) );
+  }
+};
+
 struct Format_VRS_A {
   packed_type<48>::typeX instr = 0;
   constexpr static size_t sizeOf(){ return 6; }

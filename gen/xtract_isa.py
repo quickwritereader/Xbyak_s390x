@@ -22,7 +22,7 @@ replace_err = re.compile(r"([VRIM]\d)(?=([VRIM]\d))")
 pattern = re.compile(
     r"([A-Za-z]+|Mnemonic[0-9]?|CU[1-4]+)\s+([VRIXBDLM][LH]?\d.*?)\[([EIRSV][A-Za-z-]*|MII)\]?"
 )
-pattern_one_or_no_arg = re.compile(r"([A-Z][A-Z0-9]+)\s+([A-Z]?\s+)\[(I|E|S|RRE)\]")
+pattern_one_or_no_arg = re.compile(r"([A-Z][A-Z0-9]+)\s+([A-Z\)\(0-9]*)\s+\[(I|E|S|RRE)\]")
 pattern_xt = re.compile(
     r"[A-Z]+\s+([VRIMDBLX][LH]?\d)[ ,\(\)XMDBLHVR0-6]+?[A-Z\[\]0-9, ]+?\1.*"
 )
@@ -127,7 +127,7 @@ with pdfplumber.open(file_txt) as pdf:
     for p in pdf.pages:
         # two columns split in the middle
         left = p.crop((0.09 * float(p.width), 0, 0.47 * float(p.width), p.height))
-        right = p.crop((0.5 * float(p.width), 0, 0.91 * p.width, p.height))
+        right = p.crop((0.502 * float(p.width), 0, 0.91 * p.width, p.height))
         t = left.extract_text(return_chars=False, y_tolerance=5.5, layout=True)
         # print(t)
         xtract(t)

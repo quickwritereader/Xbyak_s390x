@@ -66,6 +66,8 @@ VRR-F, opCode1:8, v1:4, r2:4, r3:4, unk:16, rxb:4, opCode2:8
 VRR-G, opCode1:8, unk1:4, v1:4, unk2:20, rxb:4, opCode2:8
 VRR-H, opCode1:8, unk1:4, v1:4, v2:4, unk2:4, m3:4, unk3:8, rxb:4, opCode2:8
 VRR-I, opCode1:8, r1:4, v2:4, unk1:8, m3:4, m4:4, unk2:4, rxb:4, opCode2:8
+VRR-J, opCode1:8, v1:4, v2:4, v3:4, unk:4, m4:4, unk:8, rxb:4, opCode2:8
+VRR-K, opCode1:8, v1:4, v2:4, unk:8, m3:4, unk:8, rxb:4, opCode2:8
 VRS-A, opCode1:8, v1:4, v3:4, b2:4, d2:12, m4:4, rxb:4, opCode2:8
 VRS-B, opCode1:8, v1:4, r3:4, b2:4, d2:12, m4:4, rxb:4, opCode2:8
 VRS-C, opCode1:8, r1:4, v3:4, b2:4, d2:12, m4:4, rxb:4, opCode2:8

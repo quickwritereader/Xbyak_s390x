@@ -772,6 +772,7 @@ void stsch(const AddrDB& db2 ){ opS(0xB234, db2); }
 void stsi(const AddrDB& db2 ){ opS(0xB27D, db2); }
 void tabort(const AddrDB& db2 ){ opS(0xB2FC, db2); }
 void tpi(const AddrDB& db2 ){ opS(0xB236, db2); }
+void trap4(const AddrDB& db2 ){ opS(0xB2FF, db2); }
 void tsch(const AddrDB& db2 ){ opS(0xB235, db2); }
 void csch( ){ opS(0xB230); }
 void hsch( ){ opS(0xB231); }
@@ -916,6 +917,7 @@ void sam64( ){ opE(0x010E); }
 void sckpf( ){ opE(0x0107); }
 void tam( ){ opE(0x010B); }
 void trap2( ){ opE(0x01FF); }
+void upt( ){ opE(0x0102); }
 void svc(const int& i ){ opI(0x0A, i); }
 void srp(const AddrDLB& dlb1, const AddrDB& db2, const int& i3 ){ opSS_C(0xF0, dlb1, db2, i3); }
 void tp(const AddrDLB& dlb1 ){ opRSL_A(0xEBC0, dlb1); }
@@ -1272,6 +1274,8 @@ void vmrlg(const VReg& v1, const VReg& v2, const VReg& v3 ){ vmrl(v1, v2, v3, 3)
 void vpkh(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpk(v1, v2, v3, 1); }
 void vpkf(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpk(v1, v2, v3, 2); }
 void vpkg(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpk(v1, v2, v3, 3); }
+void vpksh(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpks(v1, v2, v3, 1, 0); }
+void vpksf(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpks(v1, v2, v3, 2, 0); }
 void vpksg(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpks(v1, v2, v3, 3, 0); }
 void vpkshs(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpks(v1, v2, v3, 1, 1); }
 void vpksfs(const VReg& v1, const VReg& v2, const VReg& v3 ){ vpks(v1, v2, v3, 2, 1); }
@@ -1672,6 +1676,8 @@ void wfixb(const VReg& v1, const VReg& v2, const int& m4, const int& m5 ){ vfi(v
 void vlde(const VReg& v1, const VReg& v2, const int& m3, const int& m4 ){ vfll(v1, v2, m3, m4); }
 void vldeb(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 2, 0); }
 void wldeb(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 2, 8); }
+void vflls(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 2, 0); }
+void wflls(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 2, 8); }
 void wflld(const VReg& v1, const VReg& v2 ){ vfll(v1, v2, 3, 8); }
 void vled(const VReg& v1, const VReg& v2, const int& m3, const int& m4, const int& m5 ){ vflr(v1, v2, m4, m4, m5); }
 void vledb(const VReg& v1, const VReg& v2, const int& m4, const int& m5 ){ vflr(v1, v2, 3, m4, m5); }
@@ -1719,6 +1725,8 @@ void wfpsosb(const VReg& v1, const VReg& v2, const int& m5 ){ vfpso(v1, v2, 2, 8
 void vflcsb(const VReg& v1, const VReg& v2 ){ vfpso(v1, v2, 2, 0, 0); }
 void wflcsb(const VReg& v1, const VReg& v2 ){ vfpso(v1, v2, 2, 8, 0); }
 void vflnsb(const VReg& v1, const VReg& v2 ){ vfpso(v1, v2, 2, 0, 1); }
+void wflnsb(const VReg& v1, const VReg& v2 ){ vfpso(v1, v2, 2, 8, 1); }
+void vflpsb(const VReg& v1, const VReg& v2 ){ vfpso(v1, v2, 2, 0, 2); }
 void wflpsb(const VReg& v1, const VReg& v2 ){ vfpso(v1, v2, 2, 8, 2); }
 void vfpsodb(const VReg& v1, const VReg& v2, const int& m5 ){ vfpso(v1, v2, 3, 0, m5); }
 void wfpsodb(const VReg& v1, const VReg& v2, const int& m5 ){ vfpso(v1, v2, 3, 8, m5); }
@@ -1935,5 +1943,3 @@ void jrxlg(const GPReg& r1, const GPReg& r3, const Label lbl2 ){brxlg(r1, r3, lb
 
 // Missed ones: 
 // ['DIAGNOSE', '—', 'DM', 'P DM', '', '', 'MD', '83', '10-23'] 
-// ['TRAP', 'TRAP4', 'S', '¤1 A*', 'SO T', 'B ST', '', 'B2FF', '10-177'] 
-// ['UPDATE TREE', 'UPT', 'E C', '¤ A SP', 'II GM I4', 'ST', '', '0102', '7-425'] 

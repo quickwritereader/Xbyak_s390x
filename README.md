@@ -37,11 +37,14 @@ Similar to GNU C++ inline assembly
 | lgdr %r15, % f0       |  lgdr(r15, f0); |
 | lgdr %r11, % f2       |  lgdr(r11, f2); |
 | br %r14               |  br(r14); |
-| nopr %r7              |  nopr(r7) |
+| nopr %r7              |  nopr(r7) | 
 
+
+
+---
 
 #### Authors
 
-Abdelrauf Gurbanov (xbyak s390x port)    
+Abdelrauf        (xbyak s390x port)    
 MITSUNARI Shigeo (author of the original xbyak)
 
